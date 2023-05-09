@@ -41,7 +41,9 @@ class FaceDetector():
         cv2.rectangle(image, bbox, color=(255, 0, 255),  thickness=1)
         cv2.line(image, (xmin, ymin), (xmin+l, ymin), (255, 0, 255), thickness=5)
         cv2.line(image, (xmin, ymin), (xmin, ymin+l), (255, 0, 255), thickness=5)
-        cv2.putText(image, f"{str(int(score[0] * 100))}%", (xmin, ymin - 10), cv2.FONT_HERSHEY_PLAIN, fontScale=1.3, color=(0, 255,0), thickness=1)
+        cv2.putText(image, f"{str(int(score[0] * 100))}%", (xmin, ymin - 10), 
+                    cv2.FONT_HERSHEY_PLAIN, fontScale=1.3, 
+                    color=(0, 255,0), thickness=1)
 
 
 def main():
@@ -60,7 +62,9 @@ def main():
         prev_time = current_time
 
         # put fps of video in display
-        cv2.putText(frame,  f"{str(int(fps))}", (19, 50), cv2.FONT_HERSHEY_PLAIN, 1.5, (0, 255, 255), thickness=2)
+        cv2.putText(frame,  f"{str(int(fps))}", (19, 50),
+                    cv2.FONT_HERSHEY_PLAIN, 1.5, 
+                    (0, 255, 255), thickness=2)
 
         # display video window
         cv2.imshow("Video Display", frame)
