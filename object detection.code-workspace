@@ -1,0 +1,15 @@
+{
+    "folders": [
+        {
+            "path": "."
+        }
+    ],
+    "settings": {},
+    "python.pythonPath": "${workspaceFolder}/venv/bin/python",
+    "python.venvPath": "${workspaceFolder}/venv",
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": true,
+    "python.linting.flake8Enabled": true,
+    "python.formatting.provider": "black",
+    "python.formatting.blackPath": "${workspaceFolder}/venv/bin/black"
+}
