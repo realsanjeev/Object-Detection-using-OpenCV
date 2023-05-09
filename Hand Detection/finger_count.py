@@ -3,9 +3,10 @@ import time
 from hand_detector import HandDetector
 
 def draw_count(image, count, width, height):
-    print(type(width))
-    cv2.rectangle(image, (500, 300), (width, height), (0, 155, 155), -1)
-    cv2.putText(image, f"{count}", (550, 350), cv2.FONT_HERSHEY_PLAIN, 3, (155, 0, 155), 3)
+    cv2.rectangle(image, (500, 300), (width, height), 
+                  (155, 155, 155), -1)
+    cv2.putText(image, f"{count}", (width-100, height-50), 
+                cv2.FONT_HERSHEY_PLAIN, 10, (155, 0, 155), 3)
 
 def main():
     WIDTH = 700
@@ -37,8 +38,10 @@ def main():
         current_time = time.time()
         fps = 1 / (current_time - prev_time)
         prev_time = current_time
-        cv2.putText(frame, f"FPS: {int(fps)}", (10, 20), cv2.FONT_HERSHEY_PLAIN, 1.6, (155, 155, 155), 1)
-
+        cv2.putText(frame, f"FPS: {int(fps)}", (10, 20), 
+                    cv2.FONT_HERSHEY_PLAIN, 1.6, (155, 155, 155), 1)
+        
+        # display the video
         cv2.imshow("Finger Counting", frame)
         if cv2.waitKey(20) & 0xFF == ord("q"):
             break
