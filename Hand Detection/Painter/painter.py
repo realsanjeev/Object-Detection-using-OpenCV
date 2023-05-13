@@ -17,7 +17,7 @@ menu = cv2.resize(menu, (WIDTH, menu.shape[0]))
 print(f"[INFO] Shape of menu: {menu.shape}")
 
 # Initialize hand detector
-detect = HandDetector(detect_confidence=0.7)
+detect = HandDetector(detect_confidence=0.7, track_confidence=0.4)
 prev_time = 0
 
 xp = None
@@ -100,7 +100,7 @@ while True:
     current_time = time.time()
     fps = 1 / (current_time - prev_time)
     prev_time = current_time
-    cv2.putText(frame, f"FPS: {int(fps)}", (WIDTH, 20), 
+    cv2.putText(frame, f"FPS: {int(fps)}", (0, HEIGHT-30), 
                 cv2.FONT_HERSHEY_PLAIN, 1.3, (155, 89, 255), 1)
 
     # Give information of painting color: 
