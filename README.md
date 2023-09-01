@@ -21,9 +21,24 @@ MediaPipe supports a wide range of platforms, including desktop, mobile, and emb
 
 The framework has been used in a wide range of applications, such as augmented reality, virtual reality, and video analytics. It is well-known for its accuracy and performance in real-time applications, and it has been widely adopted by developers and researchers in the field of computer vision and multimedia processing.
 
-### Use Caases of mediapipe
+### Use Cases of mediapipe
 1. Face detection and tracking: MediaPipe can detect and track human faces in real-time video streams. It uses a combination of feature extraction and machine learning techniques to detect faces and track them across frames.
 
 1. Hand tracking: MediaPipe can track hand movements in real-time video streams. It uses a deep learning-based model to detect and track the position of hands and fingers in 3D space.
 
 1. Pose estimation: MediaPipe can estimate the pose of humans in real-time video streams. It uses a deep learning-based model to detect and track the position and orientation of human body parts, such as the head, torso, arms, and legs.
+
+## Contributing
+
+Contributions are welcome! If you find any issues or want to add new features, feel free to submit a pull request.
+
+## Contact Me
+
+<table>
+  <tr>
+    <td><img src="https://github.com/realsanjeev/protfolio/blob/main/src/assets/images/instagram.png" alt="Instagram" width="50" height="50"></td>
+    <td><img src="https://github.com/realsanjeev/protfolio/blob/main/src/assets/images/twitter.png" alt="Twitter" width="50" height="50"></td>
+    <td><img src="https://github.com/realsanjeev/protfolio/blob/main/src/assets/images/github.png" alt="GitHub" width="50" height="50"></td>
+    <td><img src="https://github.com/realsanjeev/protfolio/blob/main/src/assets/images/linkedin-logo.png" alt="LinkedIn" width="50" height="50"></td>
+  </tr>
+</table>
