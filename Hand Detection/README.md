@@ -8,7 +8,7 @@ MediaPipe provides a set of APIs and tools that make it easy to integrate the ha
 ![Hand Landmarks](https://developers.google.com/static/mediapipe/images/solutions/hand-landmarks.png)
 
 ## For Volume control
-Install for library for volume control
+Install for library for volume control for winow
 ```python
 pip install pycaw
 ```
