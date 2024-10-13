@@ -1,16 +1,27 @@
-# OpenCV object detection
+# OpenCV Object Detection
 
-Set-up Environment
+## Environment Setup
+
+### Windows
+To set up your environment on Windows, follow these steps:
+
 ```bash
-$ python -m venv venv
-$ .\venv\Scripts\activate
+python -m venv venv
+.\venv\Scripts\activate
+pip install -r requirements.txt
+``` 
+
+### Linux and macOS
+For Linux and macOS, use these commands:
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
 ```
 
-Install the package needed
-```
-pip install mediapipe
-pip install opencv-python
-```
+Once you've completed these steps, your environment will be ready for different detection using the `mediapipe`! For face detection and face mesh landmarks, check out the [Face Detection Directory](./Face%20Detection/README.md). For hand detection and related projects, visit the [Hand Detection Directory](./Hand%20Detection/README.md). For pose detection, refer to the [Pose Detection Directory](./Pose%20Detector/README.md).
+
 ## MediaPipe
 
 MediaPipe is an open-source framework developed by Google for building real-time multimedia processing pipelines. It provides a set of pre-built components and tools that can be used to create complex multimedia applications, such as real-time object detection, face detection and tracking, hand tracking, and pose estimation.
