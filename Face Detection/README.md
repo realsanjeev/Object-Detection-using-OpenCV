@@ -2,6 +2,16 @@
 
 The architecture of MediaPipe's face detection module is built on the BlazeFace model, a lightweight and efficient deep learning framework specifically designed for real-time face detection. BlazeFace employs a single-shot detection (SSD) approach with a MobileNetV1 backbone, allowing it to deliver high performance while maintaining low computational resource requirements.
 
+To run face detection, use the following command:
+```bash
+python face_detector.py
+```
+
+For face mesh detection, use this command:
+```bash
+python face_mesh.py
+```
+
 ## Face Detection Model
 
 The BlazeFace model in MediaPipe's face detection module is trained on extensive datasets, including the WIDER Face dataset, which features a wide range of face variations in terms of scale, pose, and occlusion. Through this training, the model becomes adept at detecting and localizing facial features such as the eyes, nose, and mouth, as well as accurately identifying faces within images.

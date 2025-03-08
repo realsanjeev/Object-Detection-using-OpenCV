@@ -22,6 +22,7 @@ prev_time = 0
 
 xp = None
 PAINT_COLOR = (0, 255, 0)
+
 while True:
     # Capture frame from video
     success, frame = capture.read()
@@ -44,40 +45,41 @@ while True:
         count = up_finger.count(1)
 
         # Set mode based on finger configuration
-        if count == 1 and up_finger[1] == 1:
+        if count == 1 and up_finger[1] == 1:  # Index finger up
             mode = "DRAWING"
         elif count >= 2:
-            mode = "SELECTION" 
+            mode = "SELECTION"
         else:
             mode = "IDEAL"
 
-        if mode=="SELECTION":
+        if mode == "SELECTION":
             xp = None
-            print(f"[INFO] selection: mode")
-            if x1<=128 and y1<=80:
+            print(f"[INFO] Selection mode")
+            if x1 <= 128 and y1 <= 80:
                 print("--------------")
-                instructiion = f"""
-                PIANTER NSTRUCTIONS:
-                Index fingure up: DRAWING mode
-                2 fingure up: SELECTION mode for painting option
-                Other Configuration of hand: IDEAL mode
-                                """
+                instruction = f"""
+                PAINTER INSTRUCTIONS:
+                Index finger up: DRAWING mode
+                2 fingers up: SELECTION mode for painting options
+                Other hand configurations: IDEAL mode
+                """
                 line_spacing = 30  # Adjust the spacing between lines
                 y = 90  # Initial y-coordinate for the first line
 
-                lines = instructiion.split('\n')
+                lines = instruction.split('\n')
                 for line in lines:
-                    cv2.putText(frame, line, (-115, y), cv2.FONT_HERSHEY_PLAIN,
+                    cv2.putText(frame, line, (10, y), cv2.FONT_HERSHEY_PLAIN,
                                 1.2, (255, 255, 255), 2)
                     y += line_spacing
-            elif x1<=256 and y1<=80:
+            elif x1 <= 256 and y1 <= 80:
                 PAINT_COLOR = (0, 255, 0)
-            elif x1<=384 and y1<=80:
+            elif x1 <= 384 and y1 <= 80:
                 PAINT_COLOR = (0, 0, 255)
-            elif x1<=512 and y1<=80:
+            elif x1 <= 512 and y1 <= 80:
                 PAINT_COLOR = (255, 0, 0)
-            elif x1<=640 and y1<=80:
+            elif x1 <= 640 and y1 <= 80:
                 PAINT_COLOR = (0, 0, 0)
+
         elif mode == "DRAWING":
             print("[INFO] Drawing mode")
             if xp is None:
@@ -87,9 +89,10 @@ while True:
         else:
             xp = None
     
+    # Threshold the drawing canvas to create a black-and-white image for blending
     thres, thres_image = cv2.threshold(draw_canvas, 128, 255, cv2.THRESH_BINARY_INV)
     
-    # To get drawing into video frame
+    # Merge the drawing canvas with the video frame
     frame = cv2.bitwise_and(frame, thres_image)
     frame = cv2.bitwise_or(frame, draw_canvas)
 
@@ -100,16 +103,16 @@ while True:
     current_time = time.time()
     fps = 1 / (current_time - prev_time)
     prev_time = current_time
-    cv2.putText(frame, f"FPS: {int(fps)}", (0, HEIGHT-30), 
+    cv2.putText(frame, f"FPS: {int(fps)}", (0, HEIGHT - 30), 
                 cv2.FONT_HERSHEY_PLAIN, 1.3, (155, 89, 255), 1)
 
-    # Give information of painting color: 
+    # Display the selected painting color
     cv2.putText(frame, "Color", (0, 20), cv2.FONT_HERSHEY_PLAIN, 1.4, (255, 255, 255), thickness=2)
     cv2.rectangle(frame, (70, 0), (95, 20), PAINT_COLOR, -1)
 
-    # Display the video frame and the draw canvas
+    # Display the video frame
     cv2.imshow("Drawing in screen", frame)
-    # Uncomment to see drawing scren
+    # Uncomment to see the drawing screen separately
     # cv2.imshow("DrawCanvas", draw_canvas)
 
     # Check for 'q' key press to exit the loop

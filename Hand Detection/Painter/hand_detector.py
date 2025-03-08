@@ -15,24 +15,24 @@ class HandDetector():
                                 Ranges from 0 to 1. Defaults to 0.5.
 
     Attributes:
-    - FINGURE_TIP (list): Indexes of the hand landmarks corresponding to the fingertips.
+    - FINGER_TIP (list): Indexes of the hand landmarks corresponding to the fingertips.
     - mp_hands: MediaPipe Hands object for detecting hands.
     - hands: A MediaPipe Hands model instance with the specified configurations.
     - mp_draw: MediaPipe drawing utilities for drawing hand landmarks and connections on the image.
 
     """
     def __init__(self, static_mode=False, max_hands=2,
-                 model_complextiy=1, 
+                 model_complexity=1, 
                  detect_confidence=0.5, 
                  track_confidence=0.5) -> None:
         
         self.static_mode = static_mode
         self.max_hands = max_hands
-        self.model_complexity = model_complextiy
+        self.model_complexity = model_complexity
         self.detect_confidence = detect_confidence
         self.track_confidence = track_confidence
 
-        self.FINGURE_TIP = [4, 8, 12, 16, 20]
+        self.FINGER_TIP = [4, 8, 12, 16, 20]
 
         self.mp_hands = mp.solutions.hands
         self.hands = self.mp_hands.Hands(static_image_mode=self.static_mode, 
@@ -64,15 +64,21 @@ class HandDetector():
         return lst_position
     
     def fingerUp(self, lst_mark):
-        fingure_status = list()
-        # for right hand thumb
-        if lst_mark[4][1] < lst_mark[4 -1][1]:
-            fingure_status.append(1)
+        finger_status = list()
+
+        # Thumb: Compare landmark 4 and landmark 3 (y-axis)
+        if lst_mark[4][1] < lst_mark[3][1]:
+            finger_status.append(1)
         else:
-            fingure_status.append(0)
-        for id in self.FINGURE_TIP[1:]:
-            if lst_mark[id][2] < lst_mark[id -1][2]:
-                fingure_status.append(1)
+            finger_status.append(0)
+
+        # For the rest of the fingers, compare the fingertip with the previous joint
+        # Starting from index 8, 12, 16, 20
+        for id in self.FINGER_TIP[1:]:
+            # Check if the tip is above the previous joint (y-axis)
+            if lst_mark[id][2] < lst_mark[id - 1][2]:
+                finger_status.append(1)
             else:
-                fingure_status.append(0)
-        return fingure_status
+                finger_status.append(0)
+
+        return finger_status
