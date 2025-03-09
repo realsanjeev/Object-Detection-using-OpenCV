@@ -3,13 +3,16 @@ import cv2
 import mediapipe as mp
 
 class FaceDetector():
-    def __init__(self, confidence=0.5, model=0) -> None:
-        self.confidence = confidence
-        self.model = model
+    def __init__(self, min_detection_confidence=0.5, model_selection=0) -> None:
+        self.min_detection_confidence = min_detection_confidence
+        self.model_selection = model_selection
 
         self.mp_draws = mp.solutions.drawing_utils
         self.mp_faces = mp.solutions.face_detection
-        self.faces = self.mp_faces.FaceDetection(min_detection_confidence=confidence, model_selection=model)
+        self.faces = self.mp_faces.FaceDetection(
+            min_detection_confidence=min_detection_confidence, 
+            model_selection=model_selection
+        )
 
     def face_detection(self, image, draw=True):
         # Convert the image to RGB (MediaPipe works with RGB images)
@@ -18,18 +21,16 @@ class FaceDetector():
         lst_box = list()
 
         if results.detections:
-            if draw:
-                for id, detection in enumerate(results.detections):
-                    h, w, c = image.shape
+            for id, detection in enumerate(results.detections):
+                h, w, c = image.shape
 
-                    r_bbox = detection.location_data.relative_bounding_box
-                    print("-"*20)
-                    bbox = int(r_bbox.xmin * w), int(r_bbox.ymin * h), \
-                            int(r_bbox.width * w), int(r_bbox.height * h)
-                    score = detection.score
-
-                    # print(bbox)
-                    lst_box.append([id, bbox, score])
+                r_bbox = detection.location_data.relative_bounding_box
+                bbox = int(r_bbox.xmin * w), int(r_bbox.ymin * h), \
+                        int(r_bbox.width * w), int(r_bbox.height * h)
+                score = detection.score
+                lst_box.append([id, bbox, score])
+                
+                if draw:
                     self.draw_box_detection(image, bbox, score)
                     # self.mp_draws.draw_detection(image, detection)
         return lst_box

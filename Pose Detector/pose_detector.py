@@ -26,28 +26,31 @@ class PoseDetector():
                                   )
         
         
-    def findPose(self, image, draw=True, postion_mark=False):
+    def findPose(self, image, draw=True, position_mark=False):
         img_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         results = self.poses.process(img_rgb)
-        lst_mark_postion = list()
+        lst_mark_position = list()
         if results.pose_landmarks:
             if draw:
                 self.mp_draw.draw_landmarks(image, results.pose_landmarks, 
                                             self.mp_pose.POSE_CONNECTIONS)
         
-        if postion_mark:
-            for id, mark in enumerate(results.pose_landmarks.landmark):
-                h, w, c = image.shape
-                cx, cy = int(mark.x * w), int(mark.y * h)
-                lst_mark_postion.append([id, cx, cy])
-        return lst_mark_postion
+            if position_mark:
+                for id, mark in enumerate(results.pose_landmarks.landmark):
+                    h, w, c = image.shape
+                    cx, cy = int(mark.x * w), int(mark.y * h)
+                    lst_mark_position.append([id, cx, cy])
+        return lst_mark_position
 
 def main():
     capture = cv2.VideoCapture(0)
     prev_time = 0 
     pose_detector = PoseDetector()
     while True:
-        sucess, frame = capture.read()
+        success, frame = capture.read()
+        if not success:
+            break
+            
         lst = pose_detector.findPose(frame)
         if len(lst) != 0:
             print(lst[3])

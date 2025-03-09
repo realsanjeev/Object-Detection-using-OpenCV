@@ -53,11 +53,12 @@ class HandDetector():
                     self.mp_draw.draw_landmarks(image, hand, self.mp_hands.HAND_CONNECTIONS)
         return image
     
-    def find_position(self, image):
+    def find_position(self, image, hand_no=0):
         h, w, c = image.shape
         lst_position = []
         if self.results.multi_hand_landmarks:
-            for hand in self.results.multi_hand_landmarks:
+            if hand_no < len(self.results.multi_hand_landmarks):
+                hand = self.results.multi_hand_landmarks[hand_no]
                 for id, mark in enumerate(hand.landmark):
                     # cx, cy = int(mark.x * w), int(mark.y * h)
                     lst_position.append([id, mark.x, mark.y])
