@@ -43,6 +43,14 @@ The framework has been used in a wide range of applications, such as augmented r
 
 Contributions are welcome! If you find any issues or want to add new features, feel free to submit a pull request.
 
+
+## References
+
+- [Mediapipe Solutions -- AI Google Dev](https://ai.google.dev/edge/mediapipe/solutions/guide)
+- [Mediapipe Face Detection -- Python Documentation](https://mediapipe.readthedocs.io/en/latest/solutions/face_detection.html)
+- [MediaPipe Face Mesh -- Python Documentation](https://mediapipe.readthedocs.io/en/latest/solutions/face_mesh.html)
+- [MediaPipe Face Mesh -- Github Wiki](https://github.com/google-ai-edge/mediapipe/wiki/MediaPipe-Face-Mesh)
+
 ## Contact Me
 
 <table>
@@ -53,3 +61,5 @@ Contributions are welcome! If you find any issues or want to add new features, f
     <td><img src="https://github.com/realsanjeev/protfolio/blob/main/src/assets/images/linkedin-logo.png" alt="LinkedIn" width="50" height="50"></td>
   </tr>
 </table>
+
+

@@ -41,5 +41,5 @@ The Face Landmark Model utilizes a lightweight convolutional neural network (CNN
 - [Mediapipe Solutions -- AI Google Dev](https://ai.google.dev/edge/mediapipe/solutions/guide)
 - [Mediapipe Face Detection -- Python Documentation](https://mediapipe.readthedocs.io/en/latest/solutions/face_detection.html)
 - [MediaPipe Face Mesh -- Python Documentation](https://mediapipe.readthedocs.io/en/latest/solutions/face_mesh.html)
-- [Mediapipe Face Mesh -- Github Wiki](https://github.com/google-ai-edge/mediapipe/wiki/MediaPipe-Face-Mesh)
+- [MediaPipe Face Mesh -- Github Wiki](https://github.com/google-ai-edge/mediapipe/wiki/MediaPipe-Face-Mesh)
 - [BlazeFace: Sub-millisecond Neural Face Detection on Mobile GPUs](https://arxiv.org/pdf/1907.05047)
