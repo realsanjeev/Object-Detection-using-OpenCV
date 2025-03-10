@@ -3,22 +3,24 @@ import time
 import mediapipe as mp
 
 class FaceMesh:
-    def __init__(self, mode=False, max_face=1, 
+    def __init__(self, static_image_mode=False, max_num_faces=1, 
                  refine_landmarks=False, 
-                 detect_confidence=0.5, track_confidence=0.5) -> None:
-        self.mode = mode
-        self.max_face = max_face
+                 min_detection_confidence=0.5, min_tracking_confidence=0.5) -> None:
+        self.static_image_mode = static_image_mode
+        self.max_num_faces = max_num_faces
         self.refine_landmarks = refine_landmarks
-        self.detect_confidence = detect_confidence
-        self.track_confidence = track_confidence
+        self.min_detection_confidence = min_detection_confidence
+        self.min_tracking_confidence = min_tracking_confidence
 
         self.mp_draws = mp.solutions.drawing_utils
         self.mp_face_mesh = mp.solutions.face_mesh
-        self.face_mesh = self.mp_face_mesh.FaceMesh(static_image_mode=self.mode,
-                                                max_num_faces=self.max_face,
-                                                refine_landmarks=self.refine_landmarks,
-                                                min_detection_confidence=self.detect_confidence,
-                                                min_tracking_confidence=self.track_confidence)
+        self.face_mesh = self.mp_face_mesh.FaceMesh(
+            static_image_mode=self.static_image_mode,
+            max_num_faces=self.max_num_faces,
+            refine_landmarks=self.refine_landmarks,
+            min_detection_confidence=self.min_detection_confidence,
+            min_tracking_confidence=self.min_tracking_confidence
+        )
 
     def draw_mesh(self, image, thickness=1, circle_radius=1, color=(0, 255, 0)):
         draw_spec = self.mp_draws.DrawingSpec(thickness=thickness, circle_radius=circle_radius, color=color)
@@ -52,9 +54,6 @@ def main():
             break
         
         landmarks_list = face_mesh.draw_mesh(frame)
-        if len(landmarks_list) > 0:
-              # Print the first face's first landmark (example)
-            print(landmarks_list[0])
 
         # Calculate FPS
         current_time = time.time()

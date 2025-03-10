@@ -57,9 +57,8 @@ def main():
         lst_mark = detect.find_position(frame)
         
         if len(lst_mark) != 0:
-            up_fingure = detect.fingerUp(lst_mark)
-            print(up_fingure)
-            count = up_fingure.count(1)
+            up_finger = detect.fingerUp(lst_mark)
+            count = up_finger.count(1)
             draw_count(frame, count, ACTUAL_WIDTH, ACTUAL_HEIGHT)
 
         # FPS calculation

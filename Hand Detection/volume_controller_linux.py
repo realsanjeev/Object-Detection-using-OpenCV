@@ -13,7 +13,7 @@ from hand_detector import HandDetector
 
 # Initialize hand detector and camera capture
 capture = cv2.VideoCapture(0)
-detector = HandDetector(0.7)
+detector = HandDetector(detect_confidence=0.7)
 
 # Constants for thumb and index finger tips
 THUMB_TIP = 4
@@ -22,7 +22,6 @@ INDEX_FINGER_TIP = 8
 # Minimum and maximum distances for volume control
 MIN_VOL_DISTANCE = 19
 MAX_VOL_DISTANCE = 122
-prev_time = 0
 
 def draw_focus(image, x1, y1, x2, y2, volume):
     # Draw a line between the thumb and index finger tips
@@ -40,46 +39,52 @@ def draw_focus(image, x1, y1, x2, y2, volume):
     y_vol = int(np.interp(volume, [0, 100], [300, 100]))
     cv2.rectangle(image, (10, y_vol), (40, 300), (0, 255, 0), -1)
 
-while True:
-    success, frame = capture.read()
-    if not success:
-        print("[ERROR] Failed to capture frame.")
-        break
+def main():
+    prev_time = 0
 
-    # Detect hand in the current frame
-    detector.find_hand(frame)
+    while True:
+        success, frame = capture.read()
+        if not success:
+            print("[ERROR] Failed to capture frame.")
+            break
 
-    # Get the landmarks of the hand if detected
-    list_mark = detector.find_position(frame)
+        # Detect hand in the current frame
+        detector.find_hand(frame)
 
-    # If landmarks for the hand are detected
-    if len(list_mark) != 0:
-        h, w, c = frame.shape
-        x1, y1 = int(list_mark[THUMB_TIP][1] * w), int(list_mark[THUMB_TIP][2] * h)
-        x2, y2 = int(list_mark[INDEX_FINGER_TIP][1] * w), int(list_mark[INDEX_FINGER_TIP][2] * h)
-        distance = int(math.hypot((x2 - x1), (y2 - y1)))
+        # Get the landmarks of the hand if detected
+        list_mark = detector.find_position(frame)
 
-        # Map the distance to volume control range
-        dist_to_vol = np.interp(distance, [MIN_VOL_DISTANCE, MAX_VOL_DISTANCE], [0, 100])
+        # If landmarks for the hand are detected
+        if len(list_mark) != 0:
+            h, w, c = frame.shape
+            x1, y1 = int(list_mark[THUMB_TIP][1] * w), int(list_mark[THUMB_TIP][2] * h)
+            x2, y2 = int(list_mark[INDEX_FINGER_TIP][1] * w), int(list_mark[INDEX_FINGER_TIP][2] * h)
+            distance = int(math.hypot((x2 - x1), (y2 - y1)))
 
-        # Set the volume using amixer
-        os.system(f'amixer -D pulse sset Master {dist_to_vol}%')
+            # Map the distance to volume control range
+            dist_to_vol = np.interp(distance, [MIN_VOL_DISTANCE, MAX_VOL_DISTANCE], [0, 100])
 
-        # Draw a circle at the tips and display volume percentage
-        draw_focus(frame, x1, y1, x2, y2, volume=dist_to_vol)
+            # Set the volume using amixer
+            os.system(f'amixer -D pulse sset Master {dist_to_vol}%')
 
-    # Calculate and display FPS
-    current_time = time.time()
-    fps = 1 / (current_time - prev_time)
-    prev_time = current_time
-    cv2.putText(frame, f"FPS: {int(fps)}", (10, 40), cv2.FONT_HERSHEY_PLAIN, 1.2, (0, 255, 255), 1)
+            # Draw a circle at the tips and display volume percentage
+            draw_focus(frame, x1, y1, x2, y2, volume=dist_to_vol)
 
-    # Display the frame in a window
-    cv2.imshow("Volume Control", frame)
+        # Calculate and display FPS
+        current_time = time.time()
+        fps = 1 / (current_time - prev_time)
+        prev_time = current_time
+        cv2.putText(frame, f"FPS: {int(fps)}", (10, 40), cv2.FONT_HERSHEY_PLAIN, 1.2, (0, 255, 255), 1)
 
-    # Exit on 'q' key press
-    if cv2.waitKey(20) & 0xFF == ord('q'):
-        break
+        # Display the frame in a window
+        cv2.imshow("Volume Control", frame)
 
-capture.release()
-cv2.destroyAllWindows()
+        # Exit on 'q' key press
+        if cv2.waitKey(20) & 0xFF == ord('q'):
+            break
+
+    capture.release()
+    cv2.destroyAllWindows()
+
+if __name__ == "__main__":
+    main()
